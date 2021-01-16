@@ -14,10 +14,6 @@ const resize = () => {
         screen.style.width = `${screen.width / devicePixelRatio}px`;
         screen.style.height = `${screen.height / devicePixelRatio}px`;
 
-        // TODO This gets rid of the empty frame,
-        //   but it might render twice now, and out of order.
-        //   We probably want to cancel the last rAF here.
-        //   Or do we? What will this do to our framerate?!??!
         render(ctx, t);
     });
 };
