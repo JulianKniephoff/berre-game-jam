@@ -4,9 +4,25 @@ import simulate from '../game/simulation';
 
 import render from './renderer';
 
+const ws = new WebSocket('ws://localhost:8080');
+ws.onopen = () => {
+    ws.send(JSON.stringify({
+        "name": "getWorld",
+        "data": null
+    }));
+};
+ws.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    const name = message.name;
+    const data = message.data;
+    switch (name) {
+        case 'world':
+            break;
+    }
+}
 
-const screen = document.getElementById('screen');
-const ctx = screen.getContext('2d');
+const screen = document.getElementById("screen");
+const ctx = screen.getContext("2d");
 
 // TODO This obviously needs to come from somewhere else
 import DUMMY_WORLD from '../server/worlds/0.json';

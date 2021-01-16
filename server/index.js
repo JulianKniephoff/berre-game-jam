@@ -2,6 +2,12 @@ import path from 'path';
 
 import express from 'express';
 
+import Server from "./server";
+
+const server = new Server();
+import DUMMY_WORLD from '../server/worlds/0.json';
+server.loadWorld(DUMMY_WORLD);
+server.listen();
 
 const app = express();
 
