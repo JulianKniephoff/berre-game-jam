@@ -2,7 +2,7 @@ import State from '../game/state';
 import World from '../game/world';
 
 export default class Client {
-    socket = new WebSocket('ws://localhost:8080');
+    socket = new WebSocket('ws://' + location.hostname + ':8080');
     id = null;
     state = null;
 
