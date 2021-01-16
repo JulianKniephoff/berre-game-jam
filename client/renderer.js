@@ -66,7 +66,6 @@ const render = (ctx, t, client) => {
 
             renderPlatformLine(ctx, x, w, y + i, imgs);
         }
-        // ctx.fillRect(x * 100, y * 100, w * 100, h * 100);
     }
 
     // Entities
