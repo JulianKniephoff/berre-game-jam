@@ -8,7 +8,7 @@
       "server",
       "game"
     ],
-    "ext": "js,html"
+    "ext": "js,html,json"
   },
   "devDependencies": {
     "connect-livereload": "^0.6.1",
