@@ -1,7 +1,5 @@
 import svg from './img/fox.svg';
 
-const PLAYER_HEIGHT = 50;
-
 const playerImage = new Image();
 playerImage.src = svg;
 
