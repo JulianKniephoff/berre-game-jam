@@ -1,4 +1,9 @@
+import svg from './img/fox.svg';
+
 const PLAYER_HEIGHT = 50;
+
+const playerImage = new Image();
+playerImage.src = svg;
 
 const render = (ctx, t, { world, player }) => {
     // Background
@@ -12,17 +17,10 @@ const render = (ctx, t, { world, player }) => {
     }
 
     // Player
-    ctx.fillStyle = 'orange';
-    ctx.beginPath();
-    const position = player.position;
-    ctx.arc(
-        position.x,
-        position.y - PLAYER_HEIGHT / 2,
-        PLAYER_HEIGHT / 2,
-        0,
-        2 * Math.PI,
-    );
-    ctx.fill();
+    {
+        const { x, y } = player.position;
+        ctx.drawImage(playerImage, x, y - 107, 100, 107);
+    }
 };
 
 export default render;
