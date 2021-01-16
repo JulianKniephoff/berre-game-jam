@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
