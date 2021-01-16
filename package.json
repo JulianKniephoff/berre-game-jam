@@ -1,6 +1,19 @@
 {
+  "scripts": {
+    "start": "nodemon dev"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "client",
+      "server"
+    ],
+    "ext": "js,html"
+  },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4"
+    "connect-livereload": "^0.6.1",
+    "nodemon": "^2.0.7",
+    "parcel-bundler": "^1.12.4",
+    "reload": "^3.1.1"
   },
   "dependencies": {
     "express": "^4.17.1"
