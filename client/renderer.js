@@ -1,6 +1,6 @@
 const PLAYER_HEIGHT = 50;
 
-const render = (ctx, t, world) => {
+const render = (ctx, t, { world, player }) => {
     // Background
     ctx.fillStyle = 'darkgreen';
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -14,7 +14,7 @@ const render = (ctx, t, world) => {
     // Player
     ctx.fillStyle = 'orange';
     ctx.beginPath();
-    const position = world.player.position;
+    const position = player.position;
     ctx.arc(
         position.x,
         position.y - PLAYER_HEIGHT / 2,

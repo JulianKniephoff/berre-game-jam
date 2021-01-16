@@ -7,10 +7,6 @@ export default class World {
 
     constructor(json) {
         Object.assign(this, json);
-
-        this.player = new Player({
-            position: this.spawn,
-        });
     }
 
     toJson() {
