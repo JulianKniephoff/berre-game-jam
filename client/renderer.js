@@ -21,7 +21,7 @@ const render = (ctx, t, client) => {
     // Platforms
     ctx.fillStyle = 'brown';
     for (const { x, y, w, h } of world.platforms) {
-        ctx.fillRect(x, y, w, h);
+        ctx.fillRect(x * 100, y * 100, w * 100, h * 100);
     }
 
     // Entities
