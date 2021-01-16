@@ -60,7 +60,11 @@ export default class Server {
         const data = message.data;
         switch (name) {
             case 'updatePlayer':
-                this.state.entities.set(data.id, data.player);
+                this.state.handleMessage(message);
+                for (const [id, socket] of this.sockets.entries()) {
+                    if (data.id === id) continue;
+                    this.send(socket, message);
+                }
                 break;
         }
     }

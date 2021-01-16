@@ -12,4 +12,15 @@ export default class State {
             entities: [...this.entities.entries()],
         };
     }
+
+    handleMessage({ name, data }) {
+        switch (name) {
+        case 'update':
+            this.entities = new Map(data);
+            break;
+        case 'updatePlayer':
+            this.entities.set(data.id, data.player);
+            break;
+        }
+    }
 }

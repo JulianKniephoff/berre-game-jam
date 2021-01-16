@@ -22,7 +22,8 @@ export default class Client {
                 this.initialized();
                 break;
             case 'update':
-                this.state.entities = new Map(data);
+            case 'updatePlayer':
+                this.state.handleMessage(message);
                 break;
         }
     }
