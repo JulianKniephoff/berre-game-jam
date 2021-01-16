@@ -70,7 +70,7 @@ const render = (ctx, t, client) => {
 
     // Entities
     for (const { position: { x, y } } of entities.values()) {
-        ctx.drawImage(playerImage, x, y - 107, 100, 107);
+        renderPlayer(ctx, x, y);
     }
 
     ctx.restore();
@@ -89,6 +89,10 @@ const renderPlatformLine = (ctx, x, w, y, { left, center, right }) => {
 
         ctx.drawImage(img, (x + i) * 100, y * 100, 100, 100);
     }
+};
+
+const renderPlayer = (ctx, x, y) => {
+    ctx.drawImage(playerImage, x, y - 2 * 107, 2 * 100, 2 * 107);
 };
 
 export default render;
