@@ -16,7 +16,7 @@ const ctx = screen.getContext("2d");
 const mainLoop = t => {
     // TODO We probably want to decouple this from rendering ...
     simulate(t, client.state);
-    render(ctx, t, client.state);
+    render(ctx, t, client);
     requestAnimationFrame(mainLoop);
 };
 requestAnimationFrame(mainLoop);
