@@ -43,7 +43,7 @@ const render = (ctx, t, client) => {
     const { world, entities } = client.state;
 
     // Background
-    ctx.fillStyle = 'darkgreen';
+    ctx.fillStyle = '#34b1eb';
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     ctx.save();
