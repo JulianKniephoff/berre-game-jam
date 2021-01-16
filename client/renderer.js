@@ -1,4 +1,4 @@
-import playerSVG from './img/fox.svg';
+import foxBodySVG from './img/fox-body.svg';
 import grassBottomCenterSVG from './img/grass-bottom-center.svg';
 import grassBottomLeftSVG from './img/grass-bottom-left.svg';
 import grassBottomRightSVG from './img/grass-bottom-right.svg';
@@ -15,7 +15,7 @@ const loadImage = (svg) => {
     return img;
 };
 
-const playerImage = loadImage(playerSVG);
+const playerImage = loadImage(foxBodySVG);
 
 const grass = {
     bottom: {
@@ -92,7 +92,18 @@ const renderPlatformLine = (ctx, x, w, y, { left, center, right }) => {
 };
 
 const renderPlayer = (ctx, x, y) => {
-    ctx.drawImage(playerImage, x, y - 2 * 107, 2 * 100, 2 * 107);
+    const [w, h] = [200, 200];
+
+    const d = new Date();
+    const r = d.getSeconds() + d.getMilliseconds() / 1000;
+
+    const before = ctx.save();
+    const [cx, cy] = [x + w / 2, y - h / 2]
+    ctx.translate(cx, cy);
+    ctx.rotate(r);
+    ctx.translate(-cx, -cy);
+    ctx.drawImage(playerImage, x, y - h, w, h);
+    ctx.restore();
 };
 
 export default render;
