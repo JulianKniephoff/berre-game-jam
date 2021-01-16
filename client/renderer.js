@@ -3,7 +3,12 @@ import svg from './img/fox.svg';
 const playerImage = new Image();
 playerImage.src = svg;
 
-const render = (ctx, t, { world, player }) => {
+const render = (ctx, t, state) => {
+    // TODO Indicate loading somehow
+    if (!state) return;
+
+    const { world, entities } = state;
+
     // Background
     ctx.fillStyle = 'darkgreen';
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -14,9 +19,8 @@ const render = (ctx, t, { world, player }) => {
         ctx.fillRect(x, y, w, h);
     }
 
-    // Player
-    {
-        const { x, y } = player.position;
+    // Entities
+    for (const { position: { x, y } } of entities.values()) {
         ctx.drawImage(playerImage, x, y - 107, 100, 107);
     }
 };

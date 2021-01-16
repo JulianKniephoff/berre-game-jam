@@ -1,9 +1,15 @@
 import Player from './player';
 
 export default class State {
-    constructor(world) {
-        this.world = world;
-        this.player = new Player({ position: this.world.spawn });
-        this.moving = 0;
+    constructor(json) {
+        Object.assign(this, json);
+        this.entities = new Map(json.entities);
+    }
+
+    toJson() {
+        return {
+            ...this,
+            entities: [...this.entities.entries()],
+        };
     }
 }
