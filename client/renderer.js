@@ -3,7 +3,7 @@ import svg from './img/fox.svg';
 const playerImage = new Image();
 playerImage.src = svg;
 
-const render = (ctx, t, client) => {
+const render = (ctx, client) => {
     // TODO Indicate loading somehow
     if (!client.state) return;
 

@@ -1,10 +1,30 @@
-const simulation = (t, state) => {
-    if (!state) return;
+export default class Simulation {
+    previous = 0;
+    lag = 0;
 
-    for (const entity of state.entities.values()) {
-        // TODO Scale this using some dt
-        entity.position.x += (entity.moving || 0) * 10;
+    DT = 16
+
+    constructor(start) {
+        this.previous = start;
     }
-};
 
-export default simulation;
+    run(t, state) {
+        const dt = t - this.previous;
+        this.previous = t;
+        this.lag += dt;
+
+        while (this.lag >= this.DT) {
+            this.update(state);
+            this.lag -= this.DT;
+        }
+    }
+
+    update(state) {
+        if (!state) return;
+
+
+        for (const entity of state.entities.values()) {
+            entity.position.x += (entity.moving || 0) * 10;
+        }
+    }
+}

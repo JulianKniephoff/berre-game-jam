@@ -4,13 +4,14 @@ import { performance } from 'perf_hooks';
 import World from '../game/world';
 import State from '../game/state';
 import Player from '../game/player';
-import simulate from '../game/simulation';
+import Simulation from '../game/simulation';
 
 export default class Server {
 
     sockets = new Map();
     socketIndex = new Map();
     state = null;
+    simulation = null;
 
     nextId = 0
 
@@ -75,9 +76,10 @@ export default class Server {
             entities: [],
         });
 
+        this.simulation = new Simulation(performance.now());
 
         setInterval(() => {
-            simulate(performance.now(), this.state);
+            this.simulation.run(performance.now(), this.state);
         }, 16);
     }
 
