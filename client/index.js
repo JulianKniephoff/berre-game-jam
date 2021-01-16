@@ -1,20 +1,15 @@
+import render from './renderer';
+
 const screen = document.getElementById('screen');
 const ctx = screen.getContext('2d');
 
-const render = (ctx, t) => {
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-    ctx.fillStyle = 'black';
-    for (let i = 0; i < ctx.canvas.height; i += 2) {
-        ctx.fillRect(0, i, ctx.canvas.width, 1);
-    }
-};
+// TODO This obviously needs to come from somewhere else
+import world from '../server/worlds/0.json';
 
 // TODO Simulation loop/framerate stuff
 // TODO Do we want a service worker?
 const mainLoop = t => {
-    render(ctx, t);
+    render(ctx, t, world);
     requestAnimationFrame(mainLoop);
 };
 requestAnimationFrame(mainLoop);
