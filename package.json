@@ -16,6 +16,7 @@
     "reload": "^3.1.1"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "ws": "^7.3.1"
   }
 }
