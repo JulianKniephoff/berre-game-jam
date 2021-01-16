@@ -3,11 +3,16 @@ import svg from './img/fox.svg';
 const playerImage = new Image();
 playerImage.src = svg;
 
-const render = (ctx, t, state) => {
+const render = (ctx, t, { world, player }) => {
     // TODO Indicate loading somehow
     if (!state) return;
 
     const { world, entities } = state;
+
+    ctx.save();
+
+    // Move camera
+    ctx.translate(-(player.position.x - (ctx.canvas.width / 2)), 0);
 
     // Background
     ctx.fillStyle = 'darkgreen';
@@ -23,6 +28,8 @@ const render = (ctx, t, state) => {
     for (const { position: { x, y } } of entities.values()) {
         ctx.drawImage(playerImage, x, y - 107, 100, 107);
     }
+
+    ctx.restore();
 };
 
 export default render;
