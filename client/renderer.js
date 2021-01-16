@@ -9,14 +9,14 @@ const render = (ctx, t, client) => {
 
     const { world, entities } = client.state;
 
+    // Background
+    ctx.fillStyle = 'darkgreen';
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
     ctx.save();
 
     // Move camera
     ctx.translate(-(client.getPlayer().position.x - (ctx.canvas.width / 2)), 0);
-
-    // Background
-    ctx.fillStyle = 'darkgreen';
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     // Platforms
     ctx.fillStyle = 'brown';
