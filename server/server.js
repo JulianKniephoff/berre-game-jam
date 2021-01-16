@@ -1,7 +1,10 @@
 import ws from 'ws';
+import { performance } from 'perf_hooks';
+
 import World from '../game/world';
 import State from '../game/state';
 import Player from '../game/player';
+import simulate from '../game/simulation';
 
 export default class Server {
 
@@ -56,11 +59,8 @@ export default class Server {
         const name = message.name;
         const data = message.data;
         switch (name) {
-            case 'getWorld':
-                this.send({
-                    name: "world",
-                    data: this.state.world.toJson()
-                });
+            case 'updatePlayer':
+                this.state.entities.set(data.id, data.player);
                 break;
         }
     }
@@ -70,6 +70,11 @@ export default class Server {
             world,
             entities: [],
         });
+
+
+        setInterval(() => {
+            simulate(performance.now(), this.state);
+        }, 16);
     }
 
     send(socket, message) {

@@ -5,7 +5,8 @@
   "nodemonConfig": {
     "watch": [
       "client",
-      "server"
+      "server",
+      "game"
     ],
     "ext": "js,html"
   },

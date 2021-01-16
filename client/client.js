@@ -33,33 +33,61 @@ export default class Client {
 
     initialized() {
         window.addEventListener('keydown', e => {
+            let update = true;
+
             switch (e.code) {
-            case "KeyA":
-            case "ArrowLeft":
-                // Handle "turn left"
-                this.getPlayer().moving = -1;
-                break;
-            case "KeyD":
-            case "ArrowRight":
-                // Handle "turn right"
-                this.getPlayer().moving = 1;
-                break;
+                case "KeyA":
+                case "ArrowLeft":
+                    // Handle "turn left"
+                    this.getPlayer().moving = -1;
+                    break;
+                case "KeyD":
+                case "ArrowRight":
+                    // Handle "turn right"
+                    this.getPlayer().moving = 1;
+                    break;
+                default:
+                    update = false;
+                    break;
+            }
+
+            if (update) {
+                this.updatePlayer();
             }
         });
 
         window.addEventListener('keyup', e => {
+            let update = true;
+
             switch (e.code) {
-            case "KeyA":
-            case "ArrowLeft":
-                // Handle "turn left"
-                this.getPlayer().moving = 0;
-                break;
-            case "KeyD":
-            case "ArrowRight":
-                // Handle "turn right"
-                this.getPlayer().moving = 0;
-                break;
+                case "KeyA":
+                case "ArrowLeft":
+                    // Handle "turn left"
+                    this.getPlayer().moving = 0;
+                    break;
+                case "KeyD":
+                case "ArrowRight":
+                    // Handle "turn right"
+                    this.getPlayer().moving = 0;
+                    break;
+                default:
+                    update = false;
+                    break;
+            }
+
+            if (update) {
+                this.updatePlayer();
             }
         });
+    }
+
+    updatePlayer() {
+        this.socket.send(JSON.stringify({
+            name: 'updatePlayer',
+            data: {
+                id: this.id,
+                player: this.getPlayer(),
+            },
+        }));
     }
 }
