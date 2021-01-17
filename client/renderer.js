@@ -61,8 +61,8 @@ const foodImages = [
 const render = (ctx, client) => {
     // TODO Indicate loading somehow
     if (!client.state) return;
+    const { world, entities, foods } = client.state;
 
-    const { world, entities } = client.state;
 
     // Background
     ctx.fillStyle = '#34b1eb';
