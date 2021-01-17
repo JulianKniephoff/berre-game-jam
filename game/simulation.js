@@ -25,6 +25,11 @@ export default class Simulation {
         for (const entity of state.entities.values()) {
             const xSpeed = entity.movingRight - entity.movingLeft;
             entity.position.x += 10 * xSpeed;
+
+            entity.position.y += -entity.ySpeed || 0;
+            if (entity.jumping) {
+                entity.ySpeed = entity.ySpeed - 2.25;
+            }
         }
     }
 }

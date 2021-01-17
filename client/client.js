@@ -51,6 +51,13 @@ export default class Client {
                     // Handle "turn right"
                     this.getPlayer().movingRight = true;
                     break;
+                case "Space":
+                    const player = this.getPlayer();
+                    if (!player.jumping) {
+                        player.jumping = true;
+                        player.ySpeed = 45;
+                    }
+                    break;
                 default:
                     update = false;
                     break;
