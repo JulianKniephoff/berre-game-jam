@@ -1,3 +1,6 @@
+const PLAYER_SPEED = 600;
+const PLAYER_JUMP_STRENGTH = 2700;
+
 export default class Player {
     position = { x: 0, y: 0 };
     movingLeft = false;
@@ -11,8 +14,13 @@ export default class Player {
 
     getSpeed() {
         return {
-            x: this.movingRight - this.movingLeft,
-            y: -this.ySpeed,
+            x: PLAYER_SPEED * (this.movingRight - this.movingLeft),
+            y: this.ySpeed,
         };
+    }
+
+    jump() {
+        this.jumping = true;
+        this.ySpeed = -PLAYER_JUMP_STRENGTH;
     }
 }
