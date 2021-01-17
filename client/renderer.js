@@ -1,6 +1,8 @@
-import foxBody0SVG from './img/fox-body.svg';
+import foxBody0SVG from './img/fox-body0.svg';
 import foxEars0SVG from './img/fox-ears0.svg';
 import foxEars1SVG from './img/fox-ears1.svg';
+import foxMouthNormalSVG from './img/fox-mouth-normal.svg';
+import foxMouthEatingSVG from './img/fox-mouth-eating.svg';
 import grassBottomCenterSVG from './img/grass-bottom-center.svg';
 import grassBottomLeftSVG from './img/grass-bottom-left.svg';
 import grassBottomRightSVG from './img/grass-bottom-right.svg';
@@ -30,6 +32,8 @@ const player = {
         loadImage(foxEars0SVG),
         loadImage(foxEars1SVG),
     ],
+    mouthNormal: loadImage(foxMouthNormalSVG),
+    mouthEating: loadImage(foxMouthEatingSVG),
 };
 
 const grass = {
@@ -163,6 +167,11 @@ const renderPlayer = (ctx, playerEntity, lag) => {
 
     ctx.drawImage(player.ears[0], -size / 2, -size, size, size);
     ctx.drawImage(player.bodies[0], -size / 2, -size / 2, size, size);
+    if (playerEntity.eatingTimer > 0) {
+        ctx.drawImage(player.mouthEating, -size / 2, -size / 2, size, size);
+    } else {
+        ctx.drawImage(player.mouthNormal, -size / 2, -size / 2, size, size);
+    }
 
     ctx.restore();
 

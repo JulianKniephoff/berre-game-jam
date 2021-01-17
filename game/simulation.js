@@ -1,5 +1,6 @@
 const GRAVITY = 7000;
 const HUNGRY_PER_SECOND = 0.2;
+const EATING_TIME = 0.5;
 
 
 export default class Simulation {
@@ -43,6 +44,7 @@ export default class Simulation {
                 }
 
                 entity.satiation -= delta * HUNGRY_PER_SECOND;
+                entity.eatingTimer -= delta;
                 if (entity.satiation < 0) {
                     entity.die();
                 }
@@ -56,6 +58,7 @@ export default class Simulation {
                     const distance = Math.sqrt(Math.pow(foodCenter.x - playerCenter.x, 2) + Math.pow(foodCenter.y - playerCenter.y, 2));
                     if (distance < 100) {
                         entity.satiation += 1;
+                        entity.eatingTimer = EATING_TIME;
                         toRemove.push(food);
                         onFoodEaten();
                     }

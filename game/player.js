@@ -9,6 +9,7 @@ export default class Player {
     satiation = 5;
     deathTimer = 0;
     jumping = false;
+    eatingTimer = 0;
 
     constructor(json) {
         Object.assign(this, json);
