@@ -6,7 +6,12 @@ export default class Client {
     state = null;
 
     constructor() {
-        this.playerName = prompt("Please enter name:");
+        this.playerName = localStorage.getItem('playerName');
+        if (!this.playerName || this.playerName == 'null') {
+            this.playerName = prompt("Please enter name:");
+            localStorage.setItem('playerName', this.playerName);
+        }
+
         this.socket = new WebSocket('ws://' + location.hostname + ':8080');
         this.socket.addEventListener('message', event => this.handleMessage(event));
     }
