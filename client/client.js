@@ -2,11 +2,12 @@ import State from '../game/state';
 import World from '../game/world';
 
 export default class Client {
-    socket = new WebSocket('ws://' + location.hostname + ':8080');
     id = null;
     state = null;
 
     constructor() {
+        this.playerName = prompt("Please enter name:");
+        this.socket = new WebSocket('ws://' + location.hostname + ':8080');
         this.socket.addEventListener('message', event => this.handleMessage(event));
     }
 
@@ -20,12 +21,18 @@ export default class Client {
                 this.state = new State(data.state);
 
                 this.initialized();
+                this.getPlayer().name = this.playerName;
+                this.updatePlayer();
                 break;
             case 'update':
             case 'updatePlayer':
                 this.state.handleMessage(message);
                 break;
         }
+    }
+
+    sendMessage(data) {
+        this.socket.send(JSON.stringify(data));
     }
 
     getPlayer() {
@@ -87,12 +94,12 @@ export default class Client {
     }
 
     updatePlayer() {
-        this.socket.send(JSON.stringify({
+        this.sendMessage({
             name: 'updatePlayer',
             data: {
                 id: this.id,
                 player: this.getPlayer(),
             },
-        }));
+        });
     }
 }
