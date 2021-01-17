@@ -16,8 +16,8 @@ const ctx = screen.getContext("2d");
 
 const simulation = new Simulation(performance.now());
 const mainLoop = t => {
-    simulation.run(t, client.state);
-    render(ctx, client);
+    const lag = simulation.run(t, client.state);
+    render(ctx, client, lag);
     requestAnimationFrame(mainLoop);
 };
 requestAnimationFrame(mainLoop);

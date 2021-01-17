@@ -17,6 +17,8 @@ export default class Simulation {
             this.update(state);
             this.lag -= this.DT;
         }
+
+        return this.lag;
     }
 
     update(state) {

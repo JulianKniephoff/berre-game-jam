@@ -62,11 +62,18 @@ const foodImages = [
     loadImage(wormSVG),
 ];
 
-const render = (ctx, client) => {
+const render = (ctx, client, lag) => {
     // TODO Indicate loading somehow
-    if (!client.state) return;
-    const { world, entities, foods } = client.state;
+    if (!client.state) {
+        return;
+    }
 
+    const { world, entities, foods } = client.state;
+    const player = client.getPlayer();
+    let playerPos = {
+        x: player.position.x + player.getSpeed().x * lag,
+        y: player.position.y + player.getSpeed().y * lag,
+    };
 
     // Background
     ctx.fillStyle = '#34b1eb';
@@ -75,7 +82,7 @@ const render = (ctx, client) => {
     ctx.save();
 
     // Move camera
-    ctx.translate(-(client.getPlayer().position.x - (ctx.canvas.width / 2)), 0);
+    ctx.translate(-(Math.floor(playerPos.x) - (ctx.canvas.width / 2)), 0);
 
     // Platforms
     let tileNo = 0;
@@ -117,7 +124,7 @@ const render = (ctx, client) => {
 
     // Entities
     for (const entity of entities.values()) {
-        renderPlayer(ctx, entity);
+        renderPlayer(ctx, entity, lag);
     }
 
     const s = (new Date()).getSeconds() + (new Date()).getMilliseconds() / 1000;
@@ -142,9 +149,11 @@ const render = (ctx, client) => {
 };
 
 
-const renderPlayer = (ctx, playerEntity) => {
+const renderPlayer = (ctx, playerEntity, lag) => {
     const size = 200;
-    const { position: { x, y }, name } = playerEntity;
+    let { position: { x, y }, name } = playerEntity;
+    x += playerEntity.getSpeed().x * lag;
+    y += playerEntity.getSpeed().y * lag;
 
     ctx.save();
     ctx.translate(x, y - size / 2);
