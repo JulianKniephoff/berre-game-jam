@@ -1,9 +1,11 @@
 import State from '../game/state';
 import World from '../game/world';
+import Sound from './sound';
 
 export default class Client {
     id = null;
     state = null;
+    sound = new Sound();
 
     constructor() {
         this.playerName = localStorage.getItem('playerName');
@@ -68,6 +70,7 @@ export default class Client {
                     if (!player.jumping) {
                         player.jumping = true;
                         player.ySpeed = 45;
+                        this.sound.play(Sound.SOUNDS.JUMP);
                     }
                     break;
                 default:
