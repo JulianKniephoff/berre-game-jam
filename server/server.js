@@ -84,7 +84,7 @@ export default class Server {
 
         setInterval(() => {
             this.simulation.run(performance.now(), this.state, () => {}, () => {}, () => {});
-            spawnFood(this.state);
+            spawnFood(this.state, this.state.entities.length);
         }, 16);
     }
 
@@ -99,12 +99,12 @@ export default class Server {
     }
 }
 
-const spawnFood = (state) => {
+const spawnFood = (state, numPlayers) => {
     const odds = 0.01;
     const num_food_kinds = 4;
-    const max_num_foods = 12;
+    const max_num_foods_per_player = 4;
 
-    if (state.foods.length >= max_num_foods) {
+    if (state.foods.length >= max_num_foods_per_player * numPlayers) {
         return;
     }
 
