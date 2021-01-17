@@ -94,11 +94,9 @@ const renderPlayer = (ctx, x, y) => {
     const size = 200;
 
     const before = ctx.save();
-    const [cx, cy] = [x + size / 2, y - size / 2]
-    ctx.translate(cx, cy);
+    ctx.translate(x, y - size / 2);
     ctx.rotate(2 * x / size);
-    ctx.translate(-cx, -cy);
-    ctx.drawImage(playerImage, x, y - size, size, size);
+    ctx.drawImage(playerImage, -size / 2, -size / 2, size, size);
     ctx.restore();
 };
 
