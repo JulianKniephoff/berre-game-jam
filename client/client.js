@@ -44,12 +44,12 @@ export default class Client {
                 case "KeyA":
                 case "ArrowLeft":
                     // Handle "turn left"
-                    this.getPlayer().moving = -1;
+                    this.getPlayer().movingLeft = true;
                     break;
                 case "KeyD":
                 case "ArrowRight":
                     // Handle "turn right"
-                    this.getPlayer().moving = 1;
+                    this.getPlayer().movingRight = true;
                     break;
                 default:
                     update = false;
@@ -68,12 +68,12 @@ export default class Client {
                 case "KeyA":
                 case "ArrowLeft":
                     // Handle "turn left"
-                    this.getPlayer().moving = 0;
+                    this.getPlayer().movingLeft = false;
                     break;
                 case "KeyD":
                 case "ArrowRight":
                     // Handle "turn right"
-                    this.getPlayer().moving = 0;
+                    this.getPlayer().movingRight = false;
                     break;
                 default:
                     update = false;
