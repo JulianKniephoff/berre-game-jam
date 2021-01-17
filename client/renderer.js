@@ -100,7 +100,7 @@ const render = (ctx, client, lag) => {
     }
     ctx.translate(
         -(Math.floor(camera.x) - (ctx.canvas.width / 2)),
-        -(Math.floor(camera.y) - (ctx.canvas.height / 2) - 400),
+        -(Math.floor(camera.y) - (ctx.canvas.height / 2) - 200),
     );
 
     // Platforms
