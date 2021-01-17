@@ -114,11 +114,6 @@ export default class Simulation {
                         } else if (eject.y > 0) {
                             entity.ySpeed = 0;
                         }
-                        if (eject.x < 0) {
-                            entity.movingRight = false;
-                        } else if (eject.x > 0) {
-                            entity.movingLeft = false;
-                        }
                     }
                 }
             } else {
