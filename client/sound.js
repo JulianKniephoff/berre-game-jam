@@ -1,10 +1,12 @@
 import eatSound from './snd/eat.mp3';
 import jumpSound from './snd/jump.mp3';
+import dieSound from './snd/die.mp3';
 
 export default class Sound {
     static SOUNDS = {
         EAT: eatSound,
-        JUMP: jumpSound
+        JUMP: jumpSound,
+        DIE: dieSound
     };
 
     constructor() {

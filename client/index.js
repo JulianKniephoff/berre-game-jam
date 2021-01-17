@@ -17,7 +17,7 @@ const ctx = screen.getContext("2d");
 
 const simulation = new Simulation(performance.now());
 const mainLoop = t => {
-    const lag = simulation.run(t, client.state, () => client.sound.play(Sound.SOUNDS.EAT));
+    const lag = simulation.run(t, client.state, () => client.sound.play(Sound.SOUNDS.EAT), () => client.sound.play(Sound.SOUNDS.DIE));
     render(ctx, client, lag);
     requestAnimationFrame(mainLoop);
 };

@@ -14,13 +14,13 @@ export default class Simulation {
         this.previous = start;
     }
 
-    run(t, state, onFoodEaten) {
+    run(t, state, onFoodEaten, onPlayerDied) {
         const dt = (t - this.previous) / 1000;
         this.previous = t;
         this.lag += dt;
 
         while (this.lag >= this.DT) {
-            this.update(state, this.DT, onFoodEaten);
+            this.update(state, this.DT, onFoodEaten, onPlayerDied);
             this.lag -= this.DT;
         }
 
@@ -28,7 +28,7 @@ export default class Simulation {
     }
 
     // delta in s
-    update(state, delta, onFoodEaten) {
+    update(state, delta, onFoodEaten, onPlayerDied) {
         if (!state) {
             return;
         }
@@ -47,6 +47,7 @@ export default class Simulation {
                 entity.eatingTimer -= delta;
                 if (entity.satiation < 0) {
                     entity.die();
+                    onPlayerDied();
                 }
 
                 // TODO: get player size from class
@@ -80,6 +81,7 @@ export default class Simulation {
                 });
                 if ((playerCenter.y - 1000) > (lowestPlatform.y + lowestPlatform.h) * 100) {
                     entity.die();
+                    onPlayerDied();
                 }
             } else {
                 entity.deathTimer -= delta;
