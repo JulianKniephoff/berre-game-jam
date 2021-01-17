@@ -143,8 +143,7 @@ const render = (ctx, client) => {
 
 
 const renderPlayer = (ctx, playerEntity) => {
-    const size = 200;
-    const { position: { x, y }, name } = playerEntity;
+    const { size, position: { x, y }, name } = playerEntity;
 
     ctx.save();
     ctx.translate(x, y - size / 2);
