@@ -6,6 +6,7 @@ export default class Client {
     id = null;
     state = null;
     sound = new Sound();
+    camera = null;
 
     constructor() {
         this.playerName = localStorage.getItem('playerName');
@@ -68,8 +69,7 @@ export default class Client {
                 case "Space":
                     const player = this.getPlayer();
                     if (!player.jumping) {
-                        player.jumping = true;
-                        player.ySpeed = 45;
+                        player.jump();
                         this.sound.play(Sound.SOUNDS.JUMP);
                     }
                     break;

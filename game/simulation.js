@@ -1,56 +1,117 @@
+const GRAVITY = 7000;
+const HUNGRY_PER_SECOND = 0.2;
+const EATING_TIME = 0.5;
+
+
 export default class Simulation {
     previous = 0;
-    lag = 0;
 
-    DT = 16
+    // In seconds
+    lag = 0;
+    DT = 0.016;
 
     constructor(start) {
         this.previous = start;
     }
 
-    run(t, state) {
-        const dt = t - this.previous;
+    run(t, state, onFoodEaten, onPlayerDied, onRespawn) {
+        const dt = (t - this.previous) / 1000;
         this.previous = t;
         this.lag += dt;
 
         while (this.lag >= this.DT) {
-            this.update(state);
+            this.update(state, this.DT, onFoodEaten, onPlayerDied, onRespawn);
             this.lag -= this.DT;
         }
+
+        return this.lag;
     }
 
-    update(state) {
-        if (!state) return;
+    // delta in s
+    update(state, delta, onFoodEaten, onPlayerDied, onRespawn) {
+        if (!state) {
+            return;
+        }
 
         for (const entity of state.entities.values()) {
-            const startPosition = { ... entity.position };
+            if (!entity.isDead()) {
+                const startPosition = { ... entity.position };
 
-            const xSpeed = entity.movingRight - entity.movingLeft;
-            entity.position.x += 10 * xSpeed;
+                const xSpeed = entity.getSpeed().x;
+                entity.position.x += delta * xSpeed;
 
-            entity.position.y += -entity.ySpeed || 0;
-            if (entity.jumping) {
-                entity.ySpeed = entity.ySpeed - 2.25;
-            }
+                entity.position.y += delta * (entity.ySpeed || 0);
+                if (entity.jumping) {
+                    entity.ySpeed = entity.ySpeed + (delta * GRAVITY);
+                }
 
-            // Collision checking
-            if (startPosition.x !== entity.position.x || startPosition.y !== entity.position.y) {
-                for (const platform of state.world.platforms) {
-                    const bounds = Object.fromEntries(
-                        Object.entries(platform).map(
-                            ([_, p]) => [_, p * 100],
-                        ),
-                    );
+                entity.satiation -= delta * HUNGRY_PER_SECOND;
+                entity.eatingTimer -= delta;
+                if (entity.satiation < 0) {
+                    entity.die();
+                    onPlayerDied();
+                }
 
-                    const eject = ejectionForce(
-                        startPosition,
-                        entity.position,
-                        { w: entity.size, h: entity.size },
-                        bounds,
-                    );
+                // TODO: get player size from class
+                const playerCenter = { x: entity.position.x, y : entity.position.y - 100 };
 
-                    entity.position.x += eject.x;
-                    entity.position.y += eject.y;
+                // eat near food
+                const toRemove = [];
+                for (const food of state.foods) {
+                    // TODO: get food size from class
+                    const foodCenter = { x: food.x * 100 + 50, y: food.y * 100 + 25 };
+                    const distance = Math.sqrt(Math.pow(foodCenter.x - playerCenter.x, 2) + Math.pow(foodCenter.y - playerCenter.y, 2));
+                    if (distance < 100) {
+                        entity.satiation += 1;
+                        entity.eatingTimer = EATING_TIME;
+                        toRemove.push(food);
+                        onFoodEaten();
+                    }
+                }
+                state.foods = state.foods.filter((food) => !toRemove.includes(food));
+
+                // die when too far away from platforms
+                const lowestPlatform = state.world.platforms.reduce((a, b) => {
+                    const lowA = (a.y + a.h) * 100;
+                    const lowB = (b.y + b.h) * 100;
+
+                    if (lowA > lowB) {
+                        return a;
+                    } else {
+                        return b;
+                    }
+                });
+                if ((playerCenter.y - 1000) > (lowestPlatform.y + lowestPlatform.h) * 100) {
+                    entity.die();
+                    onPlayerDied();
+                }
+
+                // Collision checking
+                if (startPosition.x !== entity.position.x || startPosition.y !== entity.position.y) {
+                    for (const platform of state.world.platforms) {
+                        const bounds = Object.fromEntries(
+                            Object.entries(platform).map(
+                                ([_, p]) => [_, p * 100],
+                            ),
+                        );
+
+                        const eject = ejectionForce(
+                            startPosition,
+                            entity.position,
+                            { w: entity.size, h: entity.size },
+                            bounds,
+                        );
+
+                        entity.position.x += eject.x;
+                        entity.position.y += eject.y;
+                    }
+                }
+            } else {
+                entity.deathTimer -= delta;
+                if (entity.deathTimer <= 0) {
+                    entity.deathTimer = 0;
+                    entity.respawn(state.world.spawn);
+                    onRespawn();
                 }
             }
         }

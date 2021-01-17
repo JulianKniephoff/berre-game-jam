@@ -83,7 +83,7 @@ export default class Server {
         this.simulation = new Simulation(performance.now());
 
         setInterval(() => {
-            this.simulation.run(performance.now(), this.state);
+            this.simulation.run(performance.now(), this.state, () => {}, () => {}, () => {});
             spawnFood(this.state);
         }, 16);
     }

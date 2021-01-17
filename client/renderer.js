@@ -1,6 +1,8 @@
-import foxBody0SVG from './img/fox-body.svg';
+import foxBody0SVG from './img/fox-body0.svg';
 import foxEars0SVG from './img/fox-ears0.svg';
 import foxEars1SVG from './img/fox-ears1.svg';
+import foxMouthNormalSVG from './img/fox-mouth-normal.svg';
+import foxMouthEatingSVG from './img/fox-mouth-eating.svg';
 import grassBottomCenterSVG from './img/grass-bottom-center.svg';
 import grassBottomLeftSVG from './img/grass-bottom-left.svg';
 import grassBottomRightSVG from './img/grass-bottom-right.svg';
@@ -30,6 +32,8 @@ const player = {
         loadImage(foxEars0SVG),
         loadImage(foxEars1SVG),
     ],
+    mouthNormal: loadImage(foxMouthNormalSVG),
+    mouthEating: loadImage(foxMouthEatingSVG),
 };
 
 const grass = {
@@ -62,11 +66,18 @@ const foodImages = [
     loadImage(wormSVG),
 ];
 
-const render = (ctx, client) => {
+const render = (ctx, client, lag) => {
     // TODO Indicate loading somehow
-    if (!client.state) return;
-    const { world, entities, foods } = client.state;
+    if (!client.state) {
+        return;
+    }
 
+    const { world, entities, foods } = client.state;
+    const player = client.getPlayer();
+    let playerPos = {
+        x: player.position.x + player.getSpeed().x * lag,
+        y: player.position.y + player.getSpeed().y * lag,
+    };
 
     // Background
     ctx.fillStyle = '#34b1eb';
@@ -75,7 +86,22 @@ const render = (ctx, client) => {
     ctx.save();
 
     // Move camera
-    ctx.translate(-(client.getPlayer().position.x - (ctx.canvas.width / 2)), 0);
+    const MAX_PLAYER_DIST = 200;
+    if (client.camera === null) {
+        client.camera = { x: playerPos.x, y: playerPos.y };
+    }
+    const camera = client.camera;
+    const dx = playerPos.x - camera.x;
+    const dy = playerPos.y - camera.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist > MAX_PLAYER_DIST) {
+        camera.x += (dx / dist) * (dist - MAX_PLAYER_DIST);
+        camera.y += (dy / dist) * (dist - MAX_PLAYER_DIST);
+    }
+    ctx.translate(
+        -(Math.floor(camera.x) - (ctx.canvas.width / 2)),
+        -(Math.floor(camera.y) - (ctx.canvas.height / 2) - 400),
+    );
 
     // Platforms
     let tileNo = 0;
@@ -117,10 +143,10 @@ const render = (ctx, client) => {
 
     // Entities
     for (const entity of entities.values()) {
-        renderPlayer(ctx, entity);
+        if (!entity.isDead()) {
+            renderPlayer(ctx, entity, lag);
+        }
     }
-
-    renderUi(ctx, client.getPlayer());
 
     const s = (new Date()).getSeconds() + (new Date()).getMilliseconds() / 1000;
     for (const { x, y, kind } of foods) {
@@ -139,11 +165,15 @@ const render = (ctx, client) => {
     }
 
     ctx.restore();
+
+    renderUi(ctx, client.getPlayer());
 };
 
 
-const renderPlayer = (ctx, playerEntity) => {
-    const { size, position: { x, y }, name } = playerEntity;
+const renderPlayer = (ctx, playerEntity, lag) => {
+    let { size, position: { x, y }, name } = playerEntity;
+    x += playerEntity.getSpeed().x * lag;
+    y += playerEntity.getSpeed().y * lag;
 
     ctx.save();
     ctx.translate(x, y - size / 2);
@@ -151,6 +181,12 @@ const renderPlayer = (ctx, playerEntity) => {
 
     ctx.drawImage(player.ears[0], -size / 2, -size, size, size);
     ctx.drawImage(player.bodies[0], -size / 2, -size / 2, size, size);
+    if (playerEntity.eatingTimer > 0) {
+        const mouth = (Math.ceil(playerEntity.eatingTimer * 10) % 2 !== 0) ? player.mouthEating : player.mouthNormal;
+        ctx.drawImage(mouth, -size / 2, -size / 2, size, size);
+    } else {
+        ctx.drawImage(player.mouthNormal, -size / 2, -size / 2, size, size);
+    }
 
     ctx.restore();
 
@@ -168,13 +204,27 @@ const renderPlayer = (ctx, playerEntity) => {
 
 
 const renderUi = (ctx, playerEntity) => {
-    ctx.save();
-    ctx.translate((playerEntity.position.x - (ctx.canvas.width / 2)), 0);
-    ctx.fillStyle = 'red';
-    for (let i = 0; i < 5; i++) {
-        ctx.fillRect(25 + (i * 50), 25, 40, 40);
+    if (playerEntity.isDead()) {
+        ctx.fillStyle = '#000';
+        ctx.font = "100px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("YOU DEAD", ctx.canvas.width / 2, ctx.canvas.height / 2)
+
+        ctx.font = "50px Arial";
+        ctx.fillText(
+            Math.ceil(playerEntity.deathTimer),
+            ctx.canvas.width / 2,
+            ctx.canvas.height / 2 + 100,
+        );
+    } else {
+        ctx.save();
+        ctx.fillStyle = 'red';
+        for (let i = 0; i < playerEntity.satiation; i++) {
+            const height = 40 * Math.min(1, playerEntity.satiation - i);
+            ctx.fillRect(25 + (i * 50), 25, 40, height);
+        }
+        ctx.restore();
     }
-    ctx.restore();
 };
 
 export default render;

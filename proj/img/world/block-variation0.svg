@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100mm"
+   height="100mm"
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg924"
+   inkscape:version="1.0.1 (1.0.1+r74)"
+   sodipodi:docname="block-variation0.svg"
+   inkscape:export-filename="/home/lukas/gamejam/world/grass2.png"
+   inkscape:export-xdpi="128.01601"
+   inkscape:export-ydpi="128.01601">
+  <defs
+     id="defs918" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="195.98999"
+     inkscape:cy="125.12943"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="972"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata921">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-7.4291682,-103.03214)">
+    <rect
+       style="opacity:1;fill:#68452c;fill-opacity:1;stroke:none;stroke-width:1.01175;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1595"
+       width="100"
+       height="100"
+       x="7.4291682"
+       y="103.03214"
+       inkscape:label="CenterCenter" />
+    <g
+       id="g862"
+       inkscape:label="Mouth"
+       transform="matrix(3.8624057,2.5236631,-2.5236631,3.8624057,164.05182,12.654344)"
+       style="display:inline;opacity:0.366643">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="path848"
+         sodipodi:type="arc"
+         sodipodi:cx="4.168942"
+         sodipodi:cy="-39.809147"
+         sodipodi:rx="3.3973768"
+         sodipodi:ry="3.3973768"
+         sodipodi:start="3.1415927"
+         sodipodi:end="0"
+         sodipodi:arc-type="arc"
+         d="m 0.7715652,-39.809147 a 3.3973768,3.3973768 0 0 1 3.3973768,-3.397377 3.3973768,3.3973768 0 0 1 3.3973768,3.397377"
+         sodipodi:open="true"
+         transform="scale(-1)" />
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="path852"
+         sodipodi:type="arc"
+         sodipodi:cx="-2.6258197"
+         sodipodi:cy="-39.809147"
+         sodipodi:rx="3.3973768"
+         sodipodi:ry="3.3973768"
+         sodipodi:start="3.1415927"
+         sodipodi:end="0"
+         sodipodi:arc-type="arc"
+         d="m -6.0231965,-39.809147 a 3.3973768,3.3973768 0 0 1 3.3973768,-3.397377 3.3973768,3.3973768 0 0 1 3.39737679,3.397377"
+         sodipodi:open="true"
+         transform="scale(-1)" />
+    </g>
+    <circle
+       style="opacity:0.366643;fill:#000000;fill-opacity:1;stroke:none;stroke-width:4.73802;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="path1499"
+       cx="87.089096"
+       cy="112.87112"
+       r="6.1476326"
+       transform="rotate(9.5809796)" />
+    <circle
+       style="opacity:0.366643;fill:#000000;fill-opacity:1;stroke:none;stroke-width:4.73802;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="circle1503"
+       cx="118.05558"
+       cy="126.87973"
+       r="6.1476326"
+       transform="rotate(9.5809796)" />
+  </g>
+</svg>

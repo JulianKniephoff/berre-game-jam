@@ -1,6 +1,7 @@
 import World from '../game/world';
 import State from '../game/state';
 import Simulation from '../game/simulation';
+import Sound from "./sound";
 
 import Client from './client';
 
@@ -16,8 +17,14 @@ const ctx = screen.getContext("2d");
 
 const simulation = new Simulation(performance.now());
 const mainLoop = t => {
-    simulation.run(t, client.state);
-    render(ctx, client);
+    const lag = simulation.run(
+        t,
+        client.state,
+        () => client.sound.play(Sound.SOUNDS.EAT),
+        () => client.sound.play(Sound.SOUNDS.DIE),
+        () => client.camera = null,
+    );
+    render(ctx, client, lag);
     requestAnimationFrame(mainLoop);
 };
 requestAnimationFrame(mainLoop);
