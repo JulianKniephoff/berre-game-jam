@@ -22,9 +22,9 @@ export default class Simulation {
     update(state) {
         if (!state) return;
 
-
         for (const entity of state.entities.values()) {
-            entity.position.x += (entity.moving || 0) * 10;
+            const xSpeed = entity.movingRight - entity.movingLeft;
+            entity.position.x += 10 * xSpeed;
         }
     }
 }

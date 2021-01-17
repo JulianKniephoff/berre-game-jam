@@ -3,7 +3,7 @@ import Player from './player';
 export default class State {
     constructor(json) {
         Object.assign(this, json);
-        this.entities = new Map(json.entities);
+        this.setEntities(json.entities);
     }
 
     toJson() {
@@ -13,13 +13,19 @@ export default class State {
         };
     }
 
+    setEntities(entities) {
+        this.entities = new Map(entities.map(
+            ([_, entity]) => [_, new Player(entity)]
+        ));
+    }
+
     handleMessage({ name, data }) {
         switch (name) {
         case 'update':
-            this.entities = new Map(data);
+            this.setEntities(data);
             break;
         case 'updatePlayer':
-            this.entities.set(data.id, data.player);
+            this.entities.set(data.id, new Player(data.player));
             break;
         }
     }
