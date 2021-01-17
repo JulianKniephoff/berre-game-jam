@@ -17,6 +17,7 @@ export default class Sound {
     play(soundName) {
         const sound = this.sounds.get(soundName);
         if (sound) {
+            sound.currentTime = 0;
             sound.play();
         }
     }
