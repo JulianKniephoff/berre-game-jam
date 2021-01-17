@@ -82,7 +82,7 @@ const render = (ctx, client, lag) => {
     ctx.save();
 
     // Move camera
-    ctx.translate(-(Math.floor(playerPos.x) - (ctx.canvas.width / 2)), 0);
+    ctx.translate(-(Math.floor(playerPos.x) - (ctx.canvas.width / 2)), -(Math.floor(playerPos.y) - (ctx.canvas.height / 2) - 500));
 
     // Platforms
     let tileNo = 0;
