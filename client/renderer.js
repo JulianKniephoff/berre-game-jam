@@ -10,6 +10,9 @@ import grassMiddleRightSVG from './img/grass-middle-right.svg';
 import grassTopCenterSVG from './img/grass-top-center.svg';
 import grassTopLeftSVG from './img/grass-top-left.svg';
 import grassTopRightSVG from './img/grass-top-right.svg';
+import blockVariation0SVG from './img/block-variation0.svg';
+import blockVariation1SVG from './img/block-variation1.svg';
+import blockVariation2SVG from './img/block-variation2.svg';
 
 const loadImage = (svg) => {
     const img = new Image();
@@ -41,6 +44,11 @@ const grass = {
         left: loadImage(grassTopLeftSVG),
         right: loadImage(grassTopRightSVG),
     },
+    variations: [
+        loadImage(blockVariation0SVG),
+        loadImage(blockVariation1SVG),
+        loadImage(blockVariation2SVG),
+    ],
 };
 
 
@@ -60,18 +68,40 @@ const render = (ctx, client) => {
     ctx.translate(-(client.getPlayer().position.x - (ctx.canvas.width / 2)), 0);
 
     // Platforms
+    let tileNo = 0;
     for (const { x, y, w, h } of world.platforms) {
-        for (let i = 0; i < h; i++) {
+        for (let ty = 0; ty < h; ty++) {
             let imgs;
-            if (i == 0) {
+            if (ty == 0) {
                 imgs = grass.top;
-            } else if (i == h - 1) {
+            } else if (ty == h - 1) {
                 imgs = grass.bottom;
             } else {
                 imgs = grass.middle;
             }
 
-            renderPlatformLine(ctx, x, w, y + i, imgs);
+            for (let tx = 0; tx < w; tx++) {
+                let img;
+                if (tx == 0) {
+                    img = imgs.left;
+                } else if (tx == w - 1) {
+                    img = imgs.right;
+                } else {
+                    img = imgs.center;
+                    if (ty > 0 && ty < h - 1) {
+                        if (tileNo % 37 == 0) {
+                            img = grass.variations[1];
+                        } else if (tileNo % 47 == 0) {
+                            img = grass.variations[2];
+                        } else  if (tileNo % 61 == 0) {
+                            img = grass.variations[0];
+                        }
+                    }
+                }
+
+                ctx.drawImage(img, (x + tx) * 100, (y + ty) * 100, 100, 100);
+                tileNo += 1;
+            }
         }
     }
 
@@ -83,20 +113,6 @@ const render = (ctx, client) => {
     ctx.restore();
 };
 
-const renderPlatformLine = (ctx, x, w, y, { left, center, right }) => {
-    for (let i = 0; i < w; i++) {
-        let img;
-        if (i == 0) {
-            img = left;
-        } else if (i == w - 1) {
-            img = right;
-        } else {
-            img = center;
-        }
-
-        ctx.drawImage(img, (x + i) * 100, y * 100, 100, 100);
-    }
-};
 
 const renderPlayer = (ctx, x, y) => {
     const size = 200;
