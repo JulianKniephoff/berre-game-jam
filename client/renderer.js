@@ -13,6 +13,8 @@ import grassTopRightSVG from './img/grass-top-right.svg';
 import blockVariation0SVG from './img/block-variation0.svg';
 import blockVariation1SVG from './img/block-variation1.svg';
 import blockVariation2SVG from './img/block-variation2.svg';
+import cornSVG from './img/corn.svg';
+import cherrySVG from './img/cherry.svg';
 
 const loadImage = (svg) => {
     const img = new Image();
@@ -51,6 +53,10 @@ const grass = {
     ],
 };
 
+const foodImages = [
+    loadImage(cornSVG),
+    loadImage(cherrySVG),
+];
 
 const render = (ctx, client) => {
     // TODO Indicate loading somehow
@@ -110,6 +116,22 @@ const render = (ctx, client) => {
         renderPlayer(ctx, x, y);
     }
 
+    const s = (new Date()).getSeconds() + (new Date()).getMilliseconds() / 1000;
+    for (const { x, y, kind } of foods) {
+        const size = 100;
+        const floatyMcFloatFace = Math.sin((s * 4) % (Math.PI * 2)) * 10;
+        const turnyMcTurnFace = Math.sin((s * 1.5) % (Math.PI * 2)) * 0.2;
+
+        ctx.save();
+        ctx.translate(
+            x * size + size / 2,
+            y * size + floatyMcFloatFace + size / 4,
+        );
+        ctx.rotate(turnyMcTurnFace);
+        ctx.drawImage(foodImages[kind], -size / 2, -size / 2, size, size);
+        ctx.restore();
+    }
+
     ctx.restore();
 };
 
@@ -117,7 +139,7 @@ const render = (ctx, client) => {
 const renderPlayer = (ctx, x, y) => {
     const size = 200;
 
-    const before = ctx.save();
+    ctx.save();
     ctx.translate(x, y - size / 2);
     ctx.rotate(2 * x / size);
 
