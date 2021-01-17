@@ -22,7 +22,8 @@ export default class State {
     handleMessage({ name, data }) {
         switch (name) {
         case 'update':
-            this.setEntities(data);
+            this.setEntities(data.entities);
+            this.foods = data.foods;
             break;
         case 'updatePlayer':
             this.entities.set(data.id, new Player(data.player));

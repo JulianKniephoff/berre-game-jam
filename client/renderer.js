@@ -112,9 +112,11 @@ const render = (ctx, client) => {
     }
 
     // Entities
-    for (const { position: { x, y } } of entities.values()) {
-        renderPlayer(ctx, x, y);
+    for (const entity of entities.values()) {
+        renderPlayer(ctx, entity);
     }
+
+    renderUi(ctx, client.getPlayer());
 
     const s = (new Date()).getSeconds() + (new Date()).getMilliseconds() / 1000;
     for (const { x, y, kind } of foods) {
@@ -136,8 +138,9 @@ const render = (ctx, client) => {
 };
 
 
-const renderPlayer = (ctx, x, y) => {
+const renderPlayer = (ctx, playerEntity) => {
     const size = 200;
+    const { position: { x, y }, name } = playerEntity;
 
     ctx.save();
     ctx.translate(x, y - size / 2);
@@ -146,6 +149,28 @@ const renderPlayer = (ctx, x, y) => {
     ctx.drawImage(player.ears[0], -size / 2, -size, size, size);
     ctx.drawImage(player.bodies[0], -size / 2, -size / 2, size, size);
 
+    ctx.restore();
+
+    // render name
+    if (!name) {
+        return;
+    }
+    ctx.save();
+    ctx.fillStyle = '#000';
+    ctx.font = "30px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(name, x, y - size - 50);
+    ctx.restore();
+};
+
+
+const renderUi = (ctx, playerEntity) => {
+    ctx.save();
+    ctx.translate((playerEntity.position.x - (ctx.canvas.width / 2)), 0);
+    ctx.fillStyle = 'red';
+    for (let i = 0; i < 5; i++) {
+        ctx.fillRect(25 + (i * 50), 25, 40, 40);
+    }
     ctx.restore();
 };
 
