@@ -1,4 +1,6 @@
-import foxBodySVG from './img/fox-body.svg';
+import foxBody0SVG from './img/fox-body.svg';
+import foxEars0SVG from './img/fox-ears0.svg';
+import foxEars1SVG from './img/fox-ears1.svg';
 import grassBottomCenterSVG from './img/grass-bottom-center.svg';
 import grassBottomLeftSVG from './img/grass-bottom-left.svg';
 import grassBottomRightSVG from './img/grass-bottom-right.svg';
@@ -15,7 +17,13 @@ const loadImage = (svg) => {
     return img;
 };
 
-const playerImage = loadImage(foxBodySVG);
+const player = {
+    bodies: [loadImage(foxBody0SVG)],
+    ears: [
+        loadImage(foxEars0SVG),
+        loadImage(foxEars1SVG),
+    ],
+};
 
 const grass = {
     bottom: {
@@ -96,7 +104,10 @@ const renderPlayer = (ctx, x, y) => {
     const before = ctx.save();
     ctx.translate(x, y - size / 2);
     ctx.rotate(2 * x / size);
-    ctx.drawImage(playerImage, -size / 2, -size / 2, size, size);
+
+    ctx.drawImage(player.ears[0], -size / 2, -size, size, size);
+    ctx.drawImage(player.bodies[0], -size / 2, -size / 2, size, size);
+
     ctx.restore();
 };
 
