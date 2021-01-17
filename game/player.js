@@ -12,7 +12,7 @@ export default class Player {
     getSpeed() {
         return {
             x: this.movingRight - this.movingLeft,
-            y: this.ySpeed,
+            y: -this.ySpeed,
         };
     }
 }
