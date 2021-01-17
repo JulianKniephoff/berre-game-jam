@@ -108,7 +108,7 @@ export default class Simulation {
                         entity.position.x += eject.x;
                         entity.position.y += eject.y;
 
-                        if (eject.y) {
+                        if (eject.y < 0) {
                             entity.ySpeed = 0;
                             entity.jumping = false;
                         } else if (eject.y > 0) {
