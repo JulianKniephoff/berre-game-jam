@@ -74,6 +74,7 @@ export default class Server {
         this.state = new State({
             world,
             entities: [],
+            foods: [{ x: 5, y: 9, kind: 0 }, { x: 16, y: 1, kind: 1 }],
         });
 
         this.simulation = new Simulation(performance.now());
