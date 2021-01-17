@@ -32,6 +32,11 @@ export default class Simulation {
             if (entity.jumping) {
                 entity.ySpeed = entity.ySpeed - 2.25;
             }
+
+            entity.satiation -= this.DT / 10_000;
+            if (entity.satiation < 0) {
+                entity.satiation = 0;
+            }
         }
     }
 }

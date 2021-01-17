@@ -3,6 +3,7 @@ export default class Player {
     movingLeft = false;
     movingRight = false;
     ySpeed = 0;
+    satiation = 5;
 
     constructor(json) {
         Object.assign(this, json);

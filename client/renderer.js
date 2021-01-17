@@ -180,8 +180,9 @@ const renderPlayer = (ctx, playerEntity, lag) => {
 const renderUi = (ctx, playerEntity) => {
     ctx.save();
     ctx.fillStyle = 'red';
-    for (let i = 0; i < 5; i++) {
-        ctx.fillRect(25 + (i * 50), 25, 40, 40);
+    for (let i = 0; i < playerEntity.satiation; i++) {
+        const height = 40 * Math.min(1, playerEntity.satiation - i);
+        ctx.fillRect(25 + (i * 50), 25, 40, height);
     }
     ctx.restore();
 };
