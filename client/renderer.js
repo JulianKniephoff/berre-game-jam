@@ -168,7 +168,8 @@ const renderPlayer = (ctx, playerEntity, lag) => {
     ctx.drawImage(player.ears[0], -size / 2, -size, size, size);
     ctx.drawImage(player.bodies[0], -size / 2, -size / 2, size, size);
     if (playerEntity.eatingTimer > 0) {
-        ctx.drawImage(player.mouthEating, -size / 2, -size / 2, size, size);
+        const mouth = (Math.ceil(playerEntity.eatingTimer * 10) % 2 !== 0) ? player.mouthEating : player.mouthNormal;
+        ctx.drawImage(mouth, -size / 2, -size / 2, size, size);
     } else {
         ctx.drawImage(player.mouthNormal, -size / 2, -size / 2, size, size);
     }
