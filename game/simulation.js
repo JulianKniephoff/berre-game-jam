@@ -108,9 +108,11 @@ export default class Simulation {
                         entity.position.x += eject.x;
                         entity.position.y += eject.y;
 
-                        if (eject.y < 0) {
+                        if (eject.y) {
                             entity.ySpeed = 0;
                             entity.jumping = false;
+                        } else if (eject.y > 0) {
+                            entity.ySpeed = 0;
                         }
                         if (eject.x < 0) {
                             entity.movingRight = false;
@@ -145,7 +147,7 @@ const ejectionForce = (start, end, size, obstacle) => {
     const obstacleTop = obstacle.y;
     const obstacleBottom = obstacle.y + obstacle.h;
 
-    const candidateSolutions = [
+    let candidateSolutions = [
         {
             normal: { x: 1, y: 0 },
             againstMovement: dx < 0,
@@ -174,7 +176,8 @@ const ejectionForce = (start, end, size, obstacle) => {
             a: [startLeft, startRight],
             b: [obstacleLeft, obstacleRight],
         },
-    ].filter(
+    ];
+    candidateSolutions = candidateSolutions.filter(
         // TODO Inclusive/exclusive?!
         ({ t, a, b, againstMovement }) => {
             if (isNaN(t)) {
@@ -200,7 +203,7 @@ const ejectionForce = (start, end, size, obstacle) => {
 
     if (!min) return { x: 0, y: 0 };
     return {
-        x: min.normal.x * (1 - min.t) * dx,
-        y: min.normal.y * (1 - min.t) * dy,
+        x: min.normal.x * (1 - min.t) * Math.abs(dx),
+        y: min.normal.y * (1 - min.t) * Math.abs(dy),
     };
 };
