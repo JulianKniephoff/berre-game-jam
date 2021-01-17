@@ -52,15 +52,20 @@ export default class Simulation {
                     onPlayerDied();
                 }
 
-                // TODO: get player size from class
-                const playerCenter = { x: entity.position.x, y : entity.position.y - 100 };
+                const playerCenter = {
+                    x: entity.position.x,
+                    y : entity.position.y - entity.size / 2,
+                };
 
                 // eat near food
                 const toRemove = [];
                 for (const food of state.foods) {
                     // TODO: get food size from class
                     const foodCenter = { x: food.x * 100 + 50, y: food.y * 100 + 25 };
-                    const distance = Math.sqrt(Math.pow(foodCenter.x - playerCenter.x, 2) + Math.pow(foodCenter.y - playerCenter.y, 2));
+                    const distance = Math.sqrt(
+                        Math.pow(foodCenter.x - playerCenter.x, 2)
+                            + Math.pow(foodCenter.y - playerCenter.y, 2)
+                    );
                     if (distance < 100) {
                         entity.satiation += 1;
                         entity.eatingTimer = EATING_TIME;
