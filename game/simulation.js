@@ -45,6 +45,7 @@ export default class Simulation {
 
                 entity.satiation -= delta * HUNGRY_PER_SECOND;
                 entity.eatingTimer -= delta;
+                entity.timeAlive += delta;
                 if (entity.satiation < 0) {
                     entity.die();
                     onPlayerDied();

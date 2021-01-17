@@ -198,7 +198,7 @@ const renderPlayer = (ctx, playerEntity, lag) => {
     ctx.fillStyle = '#000';
     ctx.font = "30px Arial";
     ctx.textAlign = "center";
-    ctx.fillText(name, x, y - size - 50);
+    ctx.fillText(`${name} (${Math.floor(playerEntity.timeAlive)}s)`, x, y - size - 50);
     ctx.restore();
 };
 

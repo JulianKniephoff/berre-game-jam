@@ -11,6 +11,7 @@ export default class Player {
     deathTimer = 0;
     jumping = false;
     eatingTimer = 0;
+    timeAlive = 0;
 
     constructor(json) {
         Object.assign(this, json);
@@ -44,6 +45,7 @@ export default class Player {
         let n = new Player();
         n.id = this.id;
         n.position = pos;
+        n.timeAlive = 0;
         Object.assign(this, n);
     }
 }
