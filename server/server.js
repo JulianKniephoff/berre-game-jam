@@ -51,7 +51,10 @@ export default class Server {
         setInterval(() => {
             this.broadcast({
                 name: 'update',
-                data: [...this.state.entities.entries()],
+                data: {
+                    entities: [...this.state.entities.entries()],
+                    foods: this.state.foods,
+                },
             });
         }, 1000);
     }
@@ -74,13 +77,14 @@ export default class Server {
         this.state = new State({
             world,
             entities: [],
-            foods: [{ x: 5, y: 9, kind: 0 }, { x: 16, y: 1, kind: 1 }],
+            foods: [],
         });
 
         this.simulation = new Simulation(performance.now());
 
         setInterval(() => {
             this.simulation.run(performance.now(), this.state);
+            spawnFood(this.state);
         }, 16);
     }
 
@@ -94,3 +98,35 @@ export default class Server {
         }
     }
 }
+
+const spawnFood = (state) => {
+    const odds = 0.01;
+    const num_foods = 2;
+    const max_num_foods = 12;
+
+    if (state.foods.length >= max_num_foods) {
+        return;
+    }
+
+    if (Math.random() < odds) {
+        let positions = [];
+        for (const { x, y, w } of state.world.platforms) {
+            for (let i = 0; i < w; i++) {
+                let p = { x: x + i, y: y - 1 };
+                if (state.foods.every(other => other.x != p.x || other.y != p.y)) {
+                    positions.push(p);
+                }
+            }
+        }
+
+        console.log(positions.length);
+        const pos = positions[Math.floor(Math.random() * positions.length)];
+        const kind = Math.floor(Math.random() * num_foods);
+
+        state.foods.push({
+            x: pos.x,
+            y: pos.y,
+            kind,
+        });
+    }
+};
