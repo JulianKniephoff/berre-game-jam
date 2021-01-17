@@ -122,10 +122,12 @@ const spawnFood = (state) => {
         const pos = positions[Math.floor(Math.random() * positions.length)];
         const kind = Math.floor(Math.random() * num_food_kinds);
 
-        state.foods.push({
-            x: pos.x,
-            y: pos.y,
-            kind,
-        });
+        if (pos) {
+            state.foods.push({
+                x: pos.x,
+                y: pos.y,
+                kind,
+            });
+        }
     }
 };
