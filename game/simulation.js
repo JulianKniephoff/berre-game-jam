@@ -41,9 +41,7 @@ export default class Simulation {
                 entity.position.x += delta * xSpeed;
 
                 entity.position.y += delta * (entity.ySpeed || 0);
-                if (entity.jumping) {
-                    entity.ySpeed = entity.ySpeed + (delta * GRAVITY);
-                }
+                entity.ySpeed = entity.ySpeed + (delta * GRAVITY);
 
                 entity.satiation -= delta * HUNGRY_PER_SECOND;
                 entity.eatingTimer -= delta;
@@ -113,6 +111,11 @@ export default class Simulation {
                         if (eject.y < 0) {
                             entity.ySpeed = 0;
                             entity.jumping = false;
+                        }
+                        if (eject.x < 0) {
+                            entity.movingRight = false;
+                        } else if (eject.x > 0) {
+                            entity.movingLeft = false;
                         }
                     }
                 }
