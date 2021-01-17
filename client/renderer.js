@@ -120,8 +120,6 @@ const render = (ctx, client) => {
         renderPlayer(ctx, entity);
     }
 
-    renderUi(ctx, client.getPlayer());
-
     const s = (new Date()).getSeconds() + (new Date()).getMilliseconds() / 1000;
     for (const { x, y, kind } of foods) {
         const size = 100;
@@ -139,6 +137,8 @@ const render = (ctx, client) => {
     }
 
     ctx.restore();
+
+    renderUi(ctx, client.getPlayer());
 };
 
 
@@ -170,7 +170,6 @@ const renderPlayer = (ctx, playerEntity) => {
 
 const renderUi = (ctx, playerEntity) => {
     ctx.save();
-    ctx.translate((playerEntity.position.x - (ctx.canvas.width / 2)), 0);
     ctx.fillStyle = 'red';
     for (let i = 0; i < 5; i++) {
         ctx.fillRect(25 + (i * 50), 25, 40, 40);
