@@ -49,11 +49,13 @@ export default class Simulation {
                     entity.die();
                 }
 
+                // TODO: get player size from class
+                const playerCenter = { x: entity.position.x, y : entity.position.y - 100 };
+
                 // eat near food
                 const toRemove = [];
                 for (const food of state.foods) {
-                    // TODO: get player and food size from class
-                    const playerCenter = { x: entity.position.x, y : entity.position.y - 100 };
+                    // TODO: get food size from class
                     const foodCenter = { x: food.x * 100 + 50, y: food.y * 100 + 25 };
                     const distance = Math.sqrt(Math.pow(foodCenter.x - playerCenter.x, 2) + Math.pow(foodCenter.y - playerCenter.y, 2));
                     if (distance < 100) {
@@ -63,8 +65,22 @@ export default class Simulation {
                         onFoodEaten();
                     }
                 }
-
                 state.foods = state.foods.filter((food) => !toRemove.includes(food));
+
+                // die when too far away from platforms
+                const lowestPlatform = state.world.platforms.reduce((a, b) => {
+                    const lowA = (a.y + a.h) * 100;
+                    const lowB = (b.y + b.h) * 100;
+
+                    if (lowA > lowB) {
+                        return a;
+                    } else {
+                        return b;
+                    }
+                });
+                if ((playerCenter.y - 1000) > (lowestPlatform.y + lowestPlatform.h) * 100) {
+                    entity.die();
+                }
             } else {
                 entity.deathTimer -= delta;
                 if (entity.deathTimer <= 0) {
