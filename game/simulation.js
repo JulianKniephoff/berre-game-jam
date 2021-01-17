@@ -140,32 +140,40 @@ const ejectionForce = (start, end, size, obstacle) => {
     const candidateSolutions = [
         {
             normal: { x: 1, y: 0 },
+            againstMovement: dx < 0,
             t: (obstacle.x + obstacle.w - (start.x - size.w / 2)) / dx,
             a: [startTop, startBottom],
             b: [obstacleTop, obstacleBottom],
         },
         {
             normal: { x: -1, y: 0 },
+            againstMovement: dx > 0,
             t: (obstacle.x - (start.x + size.w / 2)) / dx,
             a: [startTop, startBottom],
             b: [obstacleTop, obstacleBottom],
         },
         {
             normal: { x: 0, y: 1 },
+            againstMovement: dy < 1,
             t: (obstacle.y + obstacle.h - (start.y - size.h)) / dy,
             a: [startLeft, startRight],
             b: [obstacleLeft, obstacleRight],
         },
         {
             normal: { x: 0, y: -1 },
+            againstMovement: dy > 1,
             t: (obstacle.y - start.y) / dy,
             a: [startLeft, startRight],
             b: [obstacleLeft, obstacleRight],
         },
     ].filter(
         // TODO Inclusive/exclusive?!
-        ({ t, a, b }) => {
+        ({ t, a, b, againstMovement }) => {
             if (isNaN(t)) {
+                return false;
+            }
+
+            if (!againstMovement) {
                 return false;
             }
 
@@ -184,7 +192,7 @@ const ejectionForce = (start, end, size, obstacle) => {
 
     if (!min) return { x: 0, y: 0 };
     return {
-        x: min.normal.x * 1.1 * (1 - min.t) * dx,
-        y: min.normal.y * 1.1 * (1 - min.t) * dy,
+        x: min.normal.x * (1 - min.t) * dx,
+        y: min.normal.y * (1 - min.t) * dy,
     };
 };
