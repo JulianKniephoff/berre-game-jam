@@ -7,6 +7,8 @@ export default class Player {
     movingRight = false;
     ySpeed = 0;
     satiation = 5;
+    deathTimer = 0;
+    jumping = false;
 
     constructor(json) {
         Object.assign(this, json);
@@ -22,5 +24,23 @@ export default class Player {
     jump() {
         this.jumping = true;
         this.ySpeed = -PLAYER_JUMP_STRENGTH;
+    }
+
+    isDead() {
+        return this.deathTimer > 0;
+    }
+
+    die() {
+        this.deathTimer = 3;
+        this.movingLeft = false;
+        this.movingRight = false;
+        this.ySpeed = 0;
+    }
+
+    respawn(pos) {
+        let n = new Player();
+        n.id = this.id;
+        n.position = pos;
+        Object.assign(this, n);
     }
 }

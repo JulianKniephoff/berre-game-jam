@@ -124,7 +124,9 @@ const render = (ctx, client, lag) => {
 
     // Entities
     for (const entity of entities.values()) {
-        renderPlayer(ctx, entity, lag);
+        if (!entity.isDead()) {
+            renderPlayer(ctx, entity, lag);
+        }
     }
 
     const s = (new Date()).getSeconds() + (new Date()).getMilliseconds() / 1000;
@@ -178,13 +180,27 @@ const renderPlayer = (ctx, playerEntity, lag) => {
 
 
 const renderUi = (ctx, playerEntity) => {
-    ctx.save();
-    ctx.fillStyle = 'red';
-    for (let i = 0; i < playerEntity.satiation; i++) {
-        const height = 40 * Math.min(1, playerEntity.satiation - i);
-        ctx.fillRect(25 + (i * 50), 25, 40, height);
+    if (playerEntity.isDead()) {
+        ctx.fillStyle = '#000';
+        ctx.font = "100px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("YOU DEAD", ctx.canvas.width / 2, ctx.canvas.height / 2)
+
+        ctx.font = "50px Arial";
+        ctx.fillText(
+            Math.ceil(playerEntity.deathTimer),
+            ctx.canvas.width / 2,
+            ctx.canvas.height / 2 + 100,
+        );
+    } else {
+        ctx.save();
+        ctx.fillStyle = 'red';
+        for (let i = 0; i < playerEntity.satiation; i++) {
+            const height = 40 * Math.min(1, playerEntity.satiation - i);
+            ctx.fillRect(25 + (i * 50), 25, 40, height);
+        }
+        ctx.restore();
     }
-    ctx.restore();
 };
 
 export default render;
