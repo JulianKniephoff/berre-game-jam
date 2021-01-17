@@ -36,6 +36,10 @@ export default class Client {
         window.addEventListener('keydown', e => {
             let update = true;
 
+            if (e.repeat) {
+                return;
+            }
+
             switch (e.code) {
                 case "KeyA":
                 case "ArrowLeft":
