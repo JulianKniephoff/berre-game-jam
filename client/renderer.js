@@ -86,7 +86,22 @@ const render = (ctx, client, lag) => {
     ctx.save();
 
     // Move camera
-    ctx.translate(-(Math.floor(playerPos.x) - (ctx.canvas.width / 2)), -(Math.floor(playerPos.y) - (ctx.canvas.height / 2) - 500));
+    const MAX_PLAYER_DIST = 200;
+    if (client.camera === null) {
+        client.camera = { x: playerPos.x, y: playerPos.y };
+    }
+    const camera = client.camera;
+    const dx = playerPos.x - camera.x;
+    const dy = playerPos.y - camera.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist > MAX_PLAYER_DIST) {
+        camera.x += (dx / dist) * (dist - MAX_PLAYER_DIST);
+        camera.y += (dy / dist) * (dist - MAX_PLAYER_DIST);
+    }
+    ctx.translate(
+        -(Math.floor(camera.x) - (ctx.canvas.width / 2)),
+        -(Math.floor(camera.y) - (ctx.canvas.height / 2) - 400),
+    );
 
     // Platforms
     let tileNo = 0;

@@ -6,6 +6,7 @@ export default class Client {
     id = null;
     state = null;
     sound = new Sound();
+    camera = null;
 
     constructor() {
         this.playerName = localStorage.getItem('playerName');

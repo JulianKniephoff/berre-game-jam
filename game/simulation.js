@@ -14,13 +14,13 @@ export default class Simulation {
         this.previous = start;
     }
 
-    run(t, state, onFoodEaten, onPlayerDied) {
+    run(t, state, onFoodEaten, onPlayerDied, onRespawn) {
         const dt = (t - this.previous) / 1000;
         this.previous = t;
         this.lag += dt;
 
         while (this.lag >= this.DT) {
-            this.update(state, this.DT, onFoodEaten, onPlayerDied);
+            this.update(state, this.DT, onFoodEaten, onPlayerDied, onRespawn);
             this.lag -= this.DT;
         }
 
@@ -28,7 +28,7 @@ export default class Simulation {
     }
 
     // delta in s
-    update(state, delta, onFoodEaten, onPlayerDied) {
+    update(state, delta, onFoodEaten, onPlayerDied, onRespawn) {
         if (!state) {
             return;
         }
@@ -88,6 +88,7 @@ export default class Simulation {
                 if (entity.deathTimer <= 0) {
                     entity.deathTimer = 0;
                     entity.respawn(state.world.spawn);
+                    onRespawn();
                 }
             }
         }
