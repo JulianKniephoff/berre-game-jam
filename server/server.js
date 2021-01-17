@@ -101,7 +101,7 @@ export default class Server {
 
 const spawnFood = (state) => {
     const odds = 0.01;
-    const num_foods = 2;
+    const num_food_kinds = 4;
     const max_num_foods = 12;
 
     if (state.foods.length >= max_num_foods) {
@@ -119,9 +119,8 @@ const spawnFood = (state) => {
             }
         }
 
-        console.log(positions.length);
         const pos = positions[Math.floor(Math.random() * positions.length)];
-        const kind = Math.floor(Math.random() * num_foods);
+        const kind = Math.floor(Math.random() * num_food_kinds);
 
         state.foods.push({
             x: pos.x,

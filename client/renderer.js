@@ -15,6 +15,8 @@ import blockVariation1SVG from './img/block-variation1.svg';
 import blockVariation2SVG from './img/block-variation2.svg';
 import cornSVG from './img/corn.svg';
 import cherrySVG from './img/cherry.svg';
+import berrySVG from './img/berry.svg';
+import wormSVG from './img/worm.svg';
 
 const loadImage = (svg) => {
     const img = new Image();
@@ -56,6 +58,8 @@ const grass = {
 const foodImages = [
     loadImage(cornSVG),
     loadImage(cherrySVG),
+    loadImage(berrySVG),
+    loadImage(wormSVG),
 ];
 
 const render = (ctx, client) => {
