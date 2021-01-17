@@ -30,6 +30,33 @@ export default class Simulation {
             if (entity.jumping) {
                 entity.ySpeed = entity.ySpeed - 2.25;
             }
+
+            // Collision checking
+            const entityLeft = entity.position.x - entity.size / 2;
+            const entityRight = entity.position.x + entity.size / 2;
+            const entityTop = entity.position.y - entity.size;
+            const entityBottom = entity.position.y;
+            for (const platform of state.world.platforms) {
+                const bounds = Object.fromEntries(
+                    Object.entries(platform).map(
+                        ([_, p]) => [_, p * 100],
+                    ),
+                );
+
+                const platformLeft = bounds.x;
+                const platformRight = bounds.x + bounds.w;
+                const platformTop = bounds.y;
+                const platformBottom = bounds.y + bounds.h;
+
+                // TODO Inclusive vs. exclusive
+                if ((
+                    entityRight > platformLeft && platformRight > entityLeft
+                ) && (
+                    entityBottom > platformTop && platformBottom > entityTop
+                )) {
+                    console.log('collision');
+                }
+            }
         }
     }
 }
