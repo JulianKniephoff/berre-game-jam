@@ -52,7 +52,6 @@ const render = (ctx, client) => {
     ctx.translate(-(client.getPlayer().position.x - (ctx.canvas.width / 2)), 0);
 
     // Platforms
-    ctx.fillStyle = 'brown';
     for (const { x, y, w, h } of world.platforms) {
         for (let i = 0; i < h; i++) {
             let imgs;
@@ -92,17 +91,14 @@ const renderPlatformLine = (ctx, x, w, y, { left, center, right }) => {
 };
 
 const renderPlayer = (ctx, x, y) => {
-    const [w, h] = [200, 200];
-
-    const d = new Date();
-    const r = d.getSeconds() + d.getMilliseconds() / 1000;
+    const size = 200;
 
     const before = ctx.save();
-    const [cx, cy] = [x + w / 2, y - h / 2]
+    const [cx, cy] = [x + size / 2, y - size / 2]
     ctx.translate(cx, cy);
-    ctx.rotate(r);
+    ctx.rotate(2 * x / size);
     ctx.translate(-cx, -cy);
-    ctx.drawImage(playerImage, x, y - h, w, h);
+    ctx.drawImage(playerImage, x, y - size, size, size);
     ctx.restore();
 };
 
