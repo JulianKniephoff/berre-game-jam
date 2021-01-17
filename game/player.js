@@ -5,7 +5,7 @@ export default class Player {
     position = { x: 0, y: 0 };
     movingLeft = false;
     movingRight = false;
-    size = 200;
+    size = 195;
     ySpeed = 0;
     satiation = 5;
     deathTimer = 0;
